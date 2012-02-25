@@ -4,13 +4,13 @@ $(function() {
 
   // responseイベント受信時イベント
   socket.on('response', function(data) {
-    $('#output').append(
+    $('#output').prepend(
       '<p>' + data.nickname + ' : ' + data.chat + '</p>');
   });
 
   // message受信時イベント
   socket.on('message', function(data) {
-    $('#output').append('<p>' + data + '</p>');
+    $('#output').prepend('<p>' + data + '</p>');
   });
 
   // フォームポストイベント登録
