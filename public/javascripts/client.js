@@ -1,16 +1,28 @@
 $(function() {
   // コネクション接続
   var socket = io.connect('http://' + document.location.host);
+
   // responseイベント受信時イベント
   socket.on('response', function(data) {
-    $('#postlist').append('<p>' + data + '</p>');
+    $('#output').append(
+      '<p>' + data.nickname + ' : ' + data.chat + '</p>');
   });
+
   // message受信時イベント
-  socket.on('con-message', function(data) {
-    $('#messagelist').append('<p>' + data + '</p>');
+  socket.on('message', function(data) {
+    $('#output').append('<p>' + data + '</p>');
   });
+
   // フォームポストイベント登録
-  $('#formpost').click( function (){
-    socket.emit('post', $('#input').val());
+  $('#chatpost').click( function (){
+    var chat = $('#chat');
+    socket.emit('chatpost', chat.val());
+    chat.val('');
   });
+
+  // ニックネーム設定
+  $('#nicknamepost').click( function () {
+    socket.emit('setNickname', $('#nickname').val());
+  });
+
 });
